@@ -27,4 +27,18 @@ public class Customer {
   private String phone;
   private String address;
   private String cnpj;
+
+  public Customer(
+    String name,
+    String email,
+    String phone,
+    String address,
+    String cnpj
+  ){
+    this.name = name;
+    this.email = email;
+    this.phone = phone;
+    this.address = address;
+    this.cnpj = cnpj;
+  }
 }
