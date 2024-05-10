@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.softbrasinovacoes.logisticsmanager.controllers.dtos.InputCreateCustomerDTO;
 import com.softbrasinovacoes.logisticsmanager.controllers.dtos.InputUpdateCustomerDTO;
 import com.softbrasinovacoes.logisticsmanager.services.customers.CreateCustomerService;
+import com.softbrasinovacoes.logisticsmanager.services.customers.DeleteCustomerService;
 import com.softbrasinovacoes.logisticsmanager.services.customers.GetAllCustomersService;
 import com.softbrasinovacoes.logisticsmanager.services.customers.GetCustomerService;
 import com.softbrasinovacoes.logisticsmanager.services.customers.UpdateCustomerService;
@@ -16,6 +17,7 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +33,7 @@ public class CustomersController {
   private final GetCustomerService getCustomerService;
   private final CreateCustomerService createCustomerService;
   private final UpdateCustomerService updateCustomerService;
+  private final DeleteCustomerService deleteCustomerService;
 
   @GetMapping
   public ResponseEntity getAllCustomers() {
@@ -63,6 +66,12 @@ public class CustomersController {
     var customer = updateCustomerService.execute(id, data.name(), data.email(), data.phone(), data.address(), data.cnpj());
 
     return ResponseEntity.ok(customer);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity deleteCustomer(@PathVariable String id) {
+    deleteCustomerService.execute(id);
+    return ResponseEntity.noContent().build();
   }
 
 }
