@@ -1,0 +1,8 @@
+CREATE TABLE customer (
+  customer_id TEXT PRIMARY KEY UNIQUE NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(255) NOT NULL,
+  address TEXT NOT NULL,
+  cnpj VARCHAR(14) NOT NULL
+);
