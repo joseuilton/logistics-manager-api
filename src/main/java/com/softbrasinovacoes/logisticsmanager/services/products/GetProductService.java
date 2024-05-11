@@ -1,6 +1,7 @@
 package com.softbrasinovacoes.logisticsmanager.services.products;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import lombok.AllArgsConstructor;
 public class GetProductService {
   private final ProductRepository productRepository;
 
-  public Output execute(String id) {
+  public GetProductOutput execute(String id) {
     Optional<Product> optionalProduct = productRepository.findById(id);
 
     if (optionalProduct.isEmpty()) {
@@ -23,18 +24,26 @@ public class GetProductService {
     }
 
     var product = optionalProduct.get();
-    return new Output(
+    return new GetProductOutput(
       id,
       product.getName(),
       product.getDescription(),
-      product.getPrice_in_cents()
+      product.getPrice_in_cents(),
+      product.getItens().stream().map(item -> new ItemData(item.getItem_id(), item.getEanCode())).toList()
     );
   }
 }
 
-record Output(
+record ItemData(
+  Long item_id,
+  String ean_code
+){}
+
+record GetProductOutput(
   String product_id,
   String name,
   String description,
-  int price_in_cents)
+  int price_in_cents,
+  List<ItemData> itens
+)
 {}

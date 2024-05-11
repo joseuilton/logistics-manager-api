@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.softbrasinovacoes.logisticsmanager.controllers.dtos.InputCreateItemDTO;
 import com.softbrasinovacoes.logisticsmanager.controllers.dtos.InputCreateProductDTO;
 import com.softbrasinovacoes.logisticsmanager.controllers.dtos.InputUpdateProductDTO;
 import com.softbrasinovacoes.logisticsmanager.services.customers.DeleteCustomerService;
 import com.softbrasinovacoes.logisticsmanager.services.customers.GetAllCustomersService;
 import com.softbrasinovacoes.logisticsmanager.services.customers.GetCustomerService;
+import com.softbrasinovacoes.logisticsmanager.services.itens.CreateItemService;
 import com.softbrasinovacoes.logisticsmanager.services.products.CreateProductService;
 import com.softbrasinovacoes.logisticsmanager.services.products.DeleteProductService;
 import com.softbrasinovacoes.logisticsmanager.services.products.GetAllProductsService;
@@ -34,6 +36,7 @@ public class ProductsController {
   private final CreateProductService createProductService;
   private final UpdateProductService updateProductService;
   private final DeleteProductService deleteProductService;
+  private final CreateItemService createItemService;
 
   @GetMapping
   public ResponseEntity getAllProducts() {
@@ -52,7 +55,8 @@ public class ProductsController {
     var product = createProductService.execute(
         data.name(),
         data.description(),
-        data.price_in_cents());
+        data.price_in_cents()
+    );
     return ResponseEntity.created(null).body(product);
   }
 
@@ -76,4 +80,16 @@ public class ProductsController {
     deleteProductService.execute(id);
     return ResponseEntity.noContent().build();
   }
+
+  @PostMapping("/{id}/itens")
+  @Transactional
+  public ResponseEntity createItem(
+    @PathVariable String id,
+    @RequestBody @Valid InputCreateItemDTO data
+  ) {
+    var item = createItemService.execute(id, data.cnpj());
+      
+    return ResponseEntity.created(null).body(item);
+  }
+  
 }

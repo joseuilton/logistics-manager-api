@@ -12,10 +12,11 @@ import lombok.AllArgsConstructor;
 public class CreateProductService {
   private final ProductRepository productRepository;
 
-  public Output execute(String name, String description, int price_in_cents) {
+  public CreateProductOutput execute(String name, String description, int price_in_cents) {
     var product = new Product(name, description, price_in_cents);
     productRepository.save(product);
-    return new Output(
+    
+    return new CreateProductOutput(
       product.getProduct_id(),
       product.getName(),
       product.getDescription(),
@@ -24,7 +25,7 @@ public class CreateProductService {
   }
 }
 
-record Output(
+record CreateProductOutput(
   String product_id,
   String name,
   String description,

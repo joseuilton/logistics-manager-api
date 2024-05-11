@@ -1,9 +1,14 @@
 package com.softbrasinovacoes.logisticsmanager.domain.products;
 
+import java.util.List;
+
+import com.softbrasinovacoes.logisticsmanager.domain.itens.Item;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -25,6 +30,9 @@ public class Product {
   private String name;
   private String description;
   private int price_in_cents;
+
+  @OneToMany(mappedBy = "product")
+  private List<Item> itens;
 
   public Product(String name, String description, int price_in_cents) {
     this.name = name;

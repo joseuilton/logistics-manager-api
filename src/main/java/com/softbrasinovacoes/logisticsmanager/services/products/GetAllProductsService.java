@@ -13,23 +13,29 @@ import lombok.AllArgsConstructor;
 public class GetAllProductsService {
   private final ProductRepository productRepository;
 
-  public List<Output> execute() {
+  public List<GetAllProductsOutput> execute() {
     var products = productRepository.findAll();
-    System.out.println(products);
-    List<Output> output = products.stream().map(product -> new Output(
+    List<GetAllProductsOutput> output = products.stream().map(product -> new GetAllProductsOutput(
       product.getProduct_id(),
       product.getName(),
       product.getDescription(),
-      product.getPrice_in_cents()
+      product.getPrice_in_cents(),
+      product.getItens().stream().map(item -> new ItemData(item.getItem_id(), item.getEanCode())).toList()
     )).toList();
 
     return output;
   }
 }
 
-record Output(
+record ItemData(
+  Long item_id,
+  String ean_code
+){}
+
+record GetAllProductsOutput(
   String product_id,
   String name,
   String description,
-  int price_in_cents
+  int price_in_cents,
+  List<ItemData> itens
 ){}

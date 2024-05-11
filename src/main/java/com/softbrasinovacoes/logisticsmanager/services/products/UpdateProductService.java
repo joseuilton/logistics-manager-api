@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 public class UpdateProductService {
   private final ProductRepository productRepository;
 
-  public Output execute(
+  public UpdateProductOutput execute(
     String id,
     String name,
     String description,
@@ -33,7 +33,7 @@ public class UpdateProductService {
     if (description != null && !description.isEmpty()) product.setDescription(description);
     if (price_in_cents != 0) product.setPrice_in_cents(price_in_cents);
 
-    return new Output(
+    return new UpdateProductOutput(
       product.getProduct_id(),
       product.getName(),
       product.getDescription(),
@@ -42,7 +42,7 @@ public class UpdateProductService {
   }
 }
 
-record Output(
+record UpdateProductOutput(
   String product_id,
   String name,
   String description,

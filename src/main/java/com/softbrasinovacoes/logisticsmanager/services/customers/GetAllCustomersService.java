@@ -14,9 +14,9 @@ import lombok.AllArgsConstructor;
 public class GetAllCustomersService {
   private final CustomerRepository customerRepository;
 
-  public List<Output> execute() {
+  public List<GetAllCustomersOutput> execute() {
     var customers = customerRepository.findAll();
-    List<Output> output = customers.stream().map(customer -> new Output(
+    List<GetAllCustomersOutput> output = customers.stream().map(customer -> new GetAllCustomersOutput(
       customer.getCustomer_id(),
       customer.getName(),
       customer.getEmail(),
@@ -29,7 +29,7 @@ public class GetAllCustomersService {
   }
 }
 
-record Output(
+record GetAllCustomersOutput(
   String customerId,
   String name,
   String email,

@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 public class UpdateCustomerService {
   private final CustomerRepository customerRepository;
 
-  public Output execute(String id, String name, String email, String phone, String address, String cnpj) {
+  public UpdateCustomerOutput execute(String id, String name, String email, String phone, String address, String cnpj) {
     Optional<Customer> optionalCustomer = customerRepository.findById(id);
 
     if (optionalCustomer.isEmpty()) {
@@ -24,14 +24,13 @@ public class UpdateCustomerService {
     }
 
     var customer = optionalCustomer.get();
-    System.out.println("Passei por aqui");
 
     if (name != null && !name.isEmpty()) customer.setName(name);
     if (email != null && !email.isEmpty()) customer.setEmail(email);
     if (phone != null && !phone.isEmpty()) customer.setPhone(phone);
     if (address != null && !address.isEmpty()) customer.setAddress(address);
 
-    return new Output(
+    return new UpdateCustomerOutput(
       customer.getCustomer_id(),
       customer.getName(),
       customer.getEmail(),
@@ -42,7 +41,7 @@ public class UpdateCustomerService {
   }
 }
 
-record Output(
+record UpdateCustomerOutput(
   String customer_id,
   String name,
   String email,

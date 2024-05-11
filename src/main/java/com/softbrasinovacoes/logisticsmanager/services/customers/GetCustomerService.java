@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 public class GetCustomerService {
   private final CustomerRepository customerRepository;
 
-  public Output execute(String id) {
+  public GetCustomerOutput execute(String id) {
     Optional<Customer> optionalCustomer = customerRepository.findById(id);
 
     if (optionalCustomer.isEmpty()) {
@@ -24,7 +24,7 @@ public class GetCustomerService {
 
     var customer = optionalCustomer.get();
 
-    return new Output(
+    return new GetCustomerOutput(
       id,
       customer.getName(),
       customer.getEmail(),
@@ -35,7 +35,7 @@ public class GetCustomerService {
   } 
 }
 
-record Output(
+record GetCustomerOutput(
   String customer_id,
   String name,
   String email,

@@ -12,10 +12,7 @@ import lombok.AllArgsConstructor;
 public class CreateCustomerService {
   private final CustomerRepository customerRepository;
 
-  public Output execute(String name, String email, String phone, String address, String cnpj) {
-    System.out.println("================================================");
-    System.out.println(name);
-    System.out.println("================================================");
+  public CreateCustomerOutput execute(String name, String email, String phone, String address, String cnpj) {
     Customer customer = new Customer(
       name,
       email,
@@ -23,10 +20,9 @@ public class CreateCustomerService {
       address,
       cnpj
     );
-    System.out.println(customer);
     customerRepository.save(customer);
 
-    return new Output(
+    return new CreateCustomerOutput(
       customer.getCustomer_id(),
       customer.getName(),
       customer.getEmail(),
@@ -37,7 +33,7 @@ public class CreateCustomerService {
   }
 }
 
-record Output(
+record CreateCustomerOutput(
   String customer_id,
   String name,
   String email,
